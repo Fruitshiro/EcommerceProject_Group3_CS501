@@ -1,0 +1,73 @@
+body {
+  background-color: #f8f9fa;
+}
+
+.product-hover {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  transition: 0.3s ease;
+}
+
+.product-hover img {
+  width: 100%;
+  transition: 0.4s ease;
+  display: block;
+  border-radius: 10px;
+}
+
+.product-hover .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: 0.4s ease;
+  text-align: center;
+}
+
+.product-hover:hover img {
+  filter: brightness(50%);
+  transform: scale(1.05);
+}
+
+.product-hover:hover .overlay {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.overlay h5 {
+  margin-bottom: 5px;
+}
+
+.overlay p {
+  margin-bottom: 10px;
+}
+
+.overlay .btn {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.product-hover:hover .overlay .btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#cart-items img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 15px;
+}
