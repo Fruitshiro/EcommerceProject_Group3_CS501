@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>E-Commerce Hover Products</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* Hover effect for all products */
+    .product-hover {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border: none;
+    }
+
+    .product-hover img {
+      width: 100%;
+      transition: 0.4s ease;
+      display: block;
+    }
+
+    .product-hover .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: 0.4s ease;
+      text-align: center;
+    }
+
+    .product-hover:hover img {
+      filter: brightness(50%);
+      transform: scale(1.05);
+    }
+
+    .product-hover:hover .overlay {
+      opacity: 1;
+      background: rgba(0, 0, 0, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">Tino Shop</a>
+  </div>
+</nav>
+
+<!-- Products -->
+<section class="container py-5">
+  <h2 class="text-center mb-4 fw-bold">Hoodie Products</h2>
+  <div class="row g-4">
+
+    <!-- Product 1 -->
+    <div class="col-md-4">
+      <div class="card product-hover h-100">
+        <img src="30ee6d1406e9ea760552d296f14b7ef0.jpg" alt="Product 1">
+        <div class="overlay">
+          <h5 class="fw-bold">Hoodie 1</h5>
+          <p>₱499.00</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="col-md-4">
+      <div class="card product-hover h-100">
+        <img src="9ba26f5e206beb2d02468850dedd2f6d.jpg" alt="Product 2">
+        <div class="overlay">
+          <h5 class="fw-bold">Hoodie 2</h5>
+          <p>₱499.00</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="col-md-4">
+      <div class="card product-hover h-100">
+        <img src="0fa2615e96aa745e0d817a1434f84ad5.jpg" alt="Product 3">
+        <div class="overlay">
+          <h5 class="fw-bold">Hoodie 3</h5>
+          <p>₱499.00</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="col-md-4">
+        <div class="card product-hover h-100">
+          <img src="0fa2615e96aa745e0d817a1434f84ad5.jpg" alt="Product 4">
+          <div class="overlay">
+            <h5 class="fw-bold">Hoodie 4</h5>
+            <p>₱499.00</p>
+          </div>
+        </div>
+      </div>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-light text-center py-3">
+  <p class="mb-0">&copy; 2025 MyShop. All rights reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
