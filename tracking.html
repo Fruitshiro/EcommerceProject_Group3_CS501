@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Tracking - Tino Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a class="navbar-brand fw-bold" href="index.html">Tino Shop</a>
+        <a href="index.html" class="btn btn-outline-warning">← Back to Shop</a>
+    </div>
+</nav>
+
+<section class="container py-5">
+    <h2 class="text-center mb-4 fw-bold">📦 My Order Status</h2>
+    <p class="text-center text-muted">View the status and details of your recent orders.</p>
+    
+    <div id="order-list" class="row g-4 justify-content-center">
+        <p id="no-orders" class="text-center text-muted" style="display: none;">You haven't placed any orders yet.</p>
+    </div>
+
+    <div class="mt-5 text-center">
+        <button id="update-status-btn" class="btn btn-sm btn-info me-2">Simulate Status Change</button>
+        <small class="text-muted d-block mt-2">Click the button above to cycle the **latest** order status (for demo).</small>
+    </div>
+</section>
+
+<footer class="bg-dark text-light text-center py-3 mt-5">
+    <p class="mb-0">&copy; 2025 Tino Shop. All rights reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const orderListContainer = document.getElementById('order-list');
+    const noOrdersMessage = document.getElementById('no-orders');
+    const updateStatusBtn = document.getElementById('update-status-btn');
+
+    // Order status definitions for the simulation
+    const STATUS_FLOW = ['Placed', 'Processing', 'Shipped', 'Delivered'];
+
+    function getStatusClass(status) {
+        switch (status) {
+            case 'Placed': return 'bg-secondary';
+            case 'Processing': return 'bg-warning text-dark';
+            case 'Shipped': return 'bg-info text-dark';
+            case 'Delivered': return 'bg-success';
+            default: return 'bg-light text-dark';
+        }
+    }
+
+    function renderOrders() {
+        let orders = JSON.parse(localStorage.getItem('tinoOrders')) || [];
+        orderListContainer.innerHTML = '';
+        
+        if (orders.length === 0) {
+            noOrdersMessage.style.display = 'block';
+            updateStatusBtn.style.display = 'none';
+            return;
+        }
+
+        noOrdersMessage.style.display = 'none';
+        updateStatusBtn.style.display = 'block';
+
+        // Displaying orders in reverse order (newest first)
+        orders.reverse().forEach(order => {
+            const statusClass = getStatusClass(order.status);
+            const itemsList = order.items.map(item => 
+                `<li>${item.name} (x${item.qty}) - ₱${(item.price * item.qty).toFixed(2)}</li>`
+            ).join('');
+
+            const orderCard = document.createElement('div');
+            orderCard.classList.add('col-lg-8', 'col-md-10');
+            orderCard.innerHTML = `
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="card-title fw-bold">Order #${order.orderId}</h5>
+                                <p class="card-text text-muted mb-0">Placed on: ${order.date}</p>
+                            </div>
+                            <span class="badge ${statusClass} fs-6 p-2">${order.status}</span>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">Customer Details:</h6>
+                                <p class="mb-1">${order.customerName}</p>
+                                <p class="mb-0 text-break">${order.deliveryAddress}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold">Total:</h6>
+                                <h4 class="text-success">₱${order.totalAmount.toFixed(2)}</h4>
+                            </div>
+                        </div>
+
+                        <h6 class="fw-bold mt-3">Items Ordered:</h6>
+                        <ul class="list-unstyled small border-top pt-2">
+                            ${itemsList}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            orderListContainer.appendChild(orderCard);
+        });
+    }
+
+    // --- Simulation Logic ---
+    updateStatusBtn.addEventListener('click', () => {
+        let orders = JSON.parse(localStorage.getItem('tinoOrders')) || [];
+        if (orders.length === 0) return;
+
+        // Target the latest order 
+        const latestOrderIndex = orders.length - 1;
+        const latestOrder = orders[latestOrderIndex];
+        
+        const currentStatusIndex = STATUS_FLOW.indexOf(latestOrder.status);
+        
+        if (currentStatusIndex < STATUS_FLOW.length - 1) {
+            // Move to the next status
+            const newStatus = STATUS_FLOW[currentStatusIndex + 1];
+            latestOrder.status = newStatus;
+            
+            // Log status history (optional, but good practice)
+            latestOrder.statusHistory.push({ status: newStatus, timestamp: new Date().toLocaleString() });
+
+            // Save the updated list back to local storage
+            orders[latestOrderIndex] = latestOrder;
+            localStorage.setItem('tinoOrders', JSON.stringify(orders));
+            
+            renderOrders();
+            alert(`Order ${latestOrder.orderId} status updated to: ${newStatus}`);
+
+        } else if (currentStatusIndex === STATUS_FLOW.length - 1) {
+             alert(`Order ${latestOrder.orderId} is already Delivered!`);
+        }
+    });
+
+
+    // Initial render
+    renderOrders();
+});
+</script>
+</body>
+</html>

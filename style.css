@@ -71,3 +71,30 @@ body {
   border-radius: 8px;
   margin-right: 15px;
 }
+
+.navbar .btn-outline-light {
+            border: 2px solid #f8f9fa; /* Uniform white border */
+            color: #f8f9fa; /* White text */
+            padding: 6px 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .navbar .btn-outline-light:hover {
+            background-color: #f8f9fa; /* Solid white background on hover */
+            color: #212529; /* Dark text on hover */
+            border-color: #f8f9fa;
+        }
+
+        /* Style for the Track Order button (btn-outline-secondary) */
+        .navbar .btn-outline-secondary {
+            border: 2px solid #6c757d;
+            color: #6c757d;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .navbar .btn-outline-secondary:hover {
+            background-color: #6c757d;
+            color: #fff;
+        }
